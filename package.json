@@ -1,0 +1,14 @@
+{
+  "name": "predicc",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+  },
+  "author": "Jonathan Vilella",
+  "license": "MIT",
+  "dependencies": {
+    "@tensorflow/tfjs": "^0.14.1",
+    "csv-parser": "^2.1.0"
+  }
+}
