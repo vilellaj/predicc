@@ -5,6 +5,8 @@ const rawData = [];
 const dataFilePath = 'data/data.csv';
 
 let target = process.argv[2];
+let targetSplit = target.split('/');
+let targetDate = new Date(targetSplit[2], targetSplit[1], targetSplit[0]);
 
 const parseDate = (date) => {
     let dateSplit = date.split('/');
@@ -46,7 +48,7 @@ const predict = async () => {
     model.compile({ loss: 'meanSquaredError', optimizer: sgdOptimizer });
 
     let min = rawData[rawData.length - 1].date.getTime();
-    let max = rawData[0].date.getTime();
+    let max = targetDate.getTime();
 
     const rawDataXs = rawData.map((item) => {
         return normalize(item.date.getTime(), min, max);
@@ -63,13 +65,10 @@ const predict = async () => {
     const ys = tf.tensor2d(rawDataYs, [rawDataYs.length, 6]);
 
     // Train model with fit().
-    await model.fit(xs, ys, { epochs: 250 });
-
-    let targetSplit = target.split('/');
-    let targetDate = normalize((new Date(targetSplit[2], targetSplit[1], targetSplit[0])).getTime(), min, max);
+    await model.fit(xs, ys, { epochs: 300 });
 
     // Run inference with predict().
-    let prediction = model.predict(tf.tensor2d([target], [1, 1]));
+    let prediction = model.predict(tf.tensor2d([normalize(targetDate.getTime(), min, max)], [1, 1]));
     const readable = prediction.dataSync();
     prediction.print();
 }
