@@ -22,6 +22,7 @@ const parseFile = async (path) => {
     fs.createReadStream(path)
         .pipe(csv())
         .on('data', (item) => {
+            console.dir(item);
             rawData.push({
                 date: parseDate(item.date),
                 value: parseInt(item[`dez${targetNumber}`])
