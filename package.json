@@ -8,6 +8,6 @@
   "license": "MIT",
   "dependencies": {
     "@tensorflow/tfjs": "^0.14.1",
-    "csv-parser": "^2.1.0"
+    "csv-parser": "^2.3.5"
   }
 }
